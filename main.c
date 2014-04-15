@@ -2,10 +2,9 @@
 
 #pragma config FOSC = INTRCIO, WDTE = OFF, PWRTE = ON, MCLRE = OFF
 
-#define IR GPIO3
+#define IR GPIO5
 #define LED GPIO2
-#define MOTOR1 GPIO4
-#define MOTOR2 GPIO5
+#define RELAY GPIO4
 #define TIMEOUT 27500
 #define _XTAL_FREQ 4000000 // delay用に必要(クロック32MHzを指定)
 
@@ -30,28 +29,28 @@ void setData(int no, char row) {
 void motorGo() {
     __delay_ms(1);
     LED = 1;
-    MOTOR1 = 1;
-    MOTOR2 = 0;
+    RELAY = 1;
 }
 
 void motorBack() {
+/*
     __delay_ms(1);
     LED = 1;
     MOTOR1 = 0;
     MOTOR2 = 1;
+ */
 }
 
 void motorStop() {
     __delay_ms(1);
     LED = 0;
-    MOTOR1 = 1;
-    MOTOR2 = 1;
+    RELAY = 0;
 }
 
 main()	{
     GPIO = 0;
     CMCON = 0x07;		// コンパレータ未使用
-    TRISIO = 0b00001000;		// GP4:in
+    TRISIO = 0b00100000;		// GP4:in
     //プリスケーラ8=8μS…カウント75で600μ(1T)…だけどなか64くらいっぽい…
     OPTION_REG = 0b10000010;
     TMR0 = 0;

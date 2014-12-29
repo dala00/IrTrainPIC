@@ -4,7 +4,8 @@
 
 #define IR GPIO5
 #define LED GPIO2
-#define RELAY GPIO4
+#define RELAY_ON GPIO1
+#define RELAY_DIR GPIO0
 #define TIMEOUT 27500
 #define _XTAL_FREQ 4000000 // delay用に必要(クロック32MHzを指定)
 
@@ -27,24 +28,26 @@ void setData(int no, char row) {
 }
 
 void motorGo() {
+    RELAY_ON = 0;
+    RELAY_DIR = 0;
     __delay_ms(1);
     LED = 1;
-    RELAY = 1;
+    RELAY_ON = 1;
 }
 
 void motorBack() {
-/*
+    RELAY_ON = 0;
+    RELAY_DIR = 1;
     __delay_ms(1);
     LED = 1;
-    MOTOR1 = 0;
-    MOTOR2 = 1;
- */
+    RELAY_ON = 1;
 }
 
 void motorStop() {
     __delay_ms(1);
     LED = 0;
-    RELAY = 0;
+    RELAY_ON = 0;
+    RELAY_DIR = 0;
 }
 
 main()	{
